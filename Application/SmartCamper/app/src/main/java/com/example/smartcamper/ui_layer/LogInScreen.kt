@@ -80,7 +80,7 @@ fun LogInScreen(navController: NavController, viewModel: LoginViewModel){
         )
 
         OutlinedButton(
-            onClick = { /*Login*/ }, modifier = Modifier
+            onClick = { viewModel.login() }, modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue)
