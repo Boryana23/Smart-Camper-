@@ -20,13 +20,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.smartcamper.Screen
 
 @Composable
 fun LogInScreen(navController: NavController, viewModel: LoginViewModel){
 
     Column(horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center) {
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.padding(20.dp)) {
         Text(
             text = "Hello, camper owner... ",
             fontSize = 40.sp,
@@ -40,16 +40,14 @@ fun LogInScreen(navController: NavController, viewModel: LoginViewModel){
             value = viewModel.email,
             onValueChange = {
                 viewModel.email = it
-                viewModel.errorCheckEmail()
-                viewModel.enableButton()
             },
-            label = { viewModel.emailError?.let { Text(text = it) } },
+           label = { Text(text = viewModel.validateEmail())  },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = MaterialTheme.colors.secondary,
                 unfocusedBorderColor = MaterialTheme.colors.primary,
                 errorBorderColor = Color.Red
             ),
-            isError = viewModel.emailErrorCheck,
+            isError = viewModel.isEmailInvalid,
 
             leadingIcon = { Icon(Icons.Default.Email, contentDescription = "Email") },
             modifier = Modifier
@@ -62,16 +60,15 @@ fun LogInScreen(navController: NavController, viewModel: LoginViewModel){
             value = viewModel.password,
             onValueChange = {
                 viewModel.password = it
-                viewModel.errorCheckPassword()
-                viewModel.enableButton()
-            },
-            label = { viewModel.passwordError?.let { Text(text = it) } },
+                viewModel.validatePassword()
+                            },
+            label = { Text(text = viewModel.validatePassword())  },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = MaterialTheme.colors.secondary,
                 unfocusedBorderColor = MaterialTheme.colors.primary,
                 errorBorderColor = Color.Red
             ),
-            isError = viewModel.passwordErrorCheck,
+            isError = viewModel.isPasswordInvalid,
             leadingIcon = {
                 Icon(Icons.Default.Info, contentDescription = "Password")
             },
