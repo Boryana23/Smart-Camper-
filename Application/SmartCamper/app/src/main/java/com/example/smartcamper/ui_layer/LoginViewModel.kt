@@ -57,7 +57,10 @@ class LoginViewModel(val loginData:LoginDataImplementation): ViewModel() {
             _stateFlow.emit(LoginState.Loading)
 
         }
-        loginData.login(username = email, password = password)
+
+        viewModelScope.launch {
+            loginData.login(username = email, password = password) }
+
     }
 
 }
