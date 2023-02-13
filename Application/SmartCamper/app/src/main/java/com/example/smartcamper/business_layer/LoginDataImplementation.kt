@@ -2,6 +2,8 @@ package com.example.smartcamper.business_layer
 
 import android.os.StrictMode
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -36,9 +38,20 @@ class LoginDataImplementation {
                     onLogIn.onError(response.toString())
 
                 }else{
+                    val gson = Gson()
+                    val responseBody = response.body!!.toString()
+                    val tokens: Map<String, String> = gson.fromJson(
+                        responseBody,
+                        object : TypeToken<Map<String, String>>() {}.type
+                    )
+                    for(token in tokens){
+                        Log.e("token", token.value)
+                    }
+
                     onLogIn.onSuccess()
                     Log.i("Response", response.body!!.string())
                 }
+
             }
         }
         catch(error:Error) {
