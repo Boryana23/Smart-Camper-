@@ -4,11 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.smartcamper.business_layer.FetchDevicesImplementation
 import com.example.smartcamper.business_layer.LoginDataImplementation
-import com.example.smartcamper.ui_layer.DevicesScreen
-import com.example.smartcamper.ui_layer.LogInScreen
-import com.example.smartcamper.ui_layer.LoginViewModel
-import com.example.smartcamper.ui_layer.WelcomeScreen
+import com.example.smartcamper.ui_layer.*
 
 @Composable
 fun NavGraph(navHost: NavHostController) {
@@ -25,7 +23,7 @@ fun NavGraph(navHost: NavHostController) {
         }
 
         composable(route = Screen.Devices.route){
-            DevicesScreen()
+            DevicesScreen(viewModel = DevicesViewModel(fetchDevices = FetchDevicesImplementation()))
         }
     }
 }
