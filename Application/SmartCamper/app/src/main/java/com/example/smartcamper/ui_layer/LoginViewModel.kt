@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.smartcamper.business_layer.LoginDataImplementation
+import com.example.smartcamper.business_layer.OnLogIn
 import com.example.smartcamper.ui_layer.states.LoginState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -57,10 +58,21 @@ class LoginViewModel(val loginData:LoginDataImplementation): ViewModel() {
             _stateFlow.emit(LoginState.Loading)
 
         }
+            loginData.login(username = email, password = password, onLogIn = object:OnLogIn{
+                override fun onError(error: String) {
+                    viewModelScope.launch {
+                        _stateFlow.emit(LoginState.Error(error))
+                    }
+                }
 
-        viewModelScope.launch {
-            loginData.login(username = email, password = password) }
+                override fun onSuccess() {
+                    viewModelScope.launch {
+                        _stateFlow.emit(LoginState.Success)
+                    }
+                }
+            })
+
+        }
 
     }
 
-}

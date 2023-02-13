@@ -10,7 +10,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 class LoginDataImplementation {
-    fun login( username:String, password:String){
+    fun login( username:String, password:String, onLogIn: OnLogIn){
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
         var client:OkHttpClient = OkHttpClient()
@@ -32,9 +32,13 @@ class LoginDataImplementation {
                 .build()
 
             client.newCall(request).execute().use { response ->
-                if (!response.isSuccessful) throw IOException("Unexpected code $response")
+                if (!response.isSuccessful){
+                    onLogIn.onError(response.toString())
 
-                Log.e("Response", response.body!!.string())
+                }else{
+                    onLogIn.onSuccess()
+                    Log.i("Response", response.body!!.string())
+                }
             }
         }
         catch(error:Error) {

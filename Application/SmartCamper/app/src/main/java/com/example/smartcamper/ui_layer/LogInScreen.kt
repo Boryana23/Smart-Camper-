@@ -1,5 +1,7 @@
 package com.example.smartcamper.ui_layer
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,16 +12,27 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import com.example.smartcamper.Screen
+import com.example.smartcamper.ui_layer.states.LoginState
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 @Composable
 fun LogInScreen(navController: NavController, viewModel: LoginViewModel){
@@ -34,6 +47,7 @@ fun LogInScreen(navController: NavController, viewModel: LoginViewModel){
             textAlign = TextAlign.Center,
             color = Color.Blue,
             modifier = Modifier.padding(top = 50.dp, start = 20.dp, end = 20.dp)
+
         )
 
         OutlinedTextField(
@@ -93,4 +107,39 @@ fun LogInScreen(navController: NavController, viewModel: LoginViewModel){
             )
         }
     }
+    observeViewModel(LocalLifecycleOwner.current, viewModel, LocalContext.current, navController)
 }
+
+fun observeViewModel (
+    lifecycleOwner: LifecycleOwner,
+    viewModel: LoginViewModel,
+    context: Context,
+    navController: NavController
+) {
+    lifecycleOwner.lifecycleScope.launch{
+        viewModel.stateFlow.collectLatest {
+            viewModel.stateFlow.onEach {
+                when(it){
+                    is LoginState.Success -> {
+                        Toast.makeText(
+                        context,
+                        "Success",
+                        Toast.LENGTH_LONG
+                    ).show()
+                        navController.navigate(Screen.Devices.route)
+                    }
+                    is LoginState.Error -> {
+                        Toast.makeText(
+                            context,
+                            "Error: " + it.error,
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                    }else -> {}
+                }
+            }.launchIn(this)
+        }
+    }
+}
+
+
