@@ -1,5 +1,6 @@
 package com.example.smartcamper.ui_layer
 
+import android.app.Activity
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -92,9 +93,10 @@ fun LogInScreen(navController: NavController, viewModel: LoginViewModel){
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
         )
+        val activity:Activity = LocalContext.current as Activity
 
         OutlinedButton(
-            onClick = { viewModel.login() }, modifier = Modifier
+            onClick = { viewModel.login(activity) }, modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue)

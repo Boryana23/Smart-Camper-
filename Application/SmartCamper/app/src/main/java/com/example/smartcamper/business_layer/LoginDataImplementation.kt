@@ -1,5 +1,7 @@
 package com.example.smartcamper.business_layer
 
+import android.app.Activity
+import android.content.Context
 import android.os.StrictMode
 import android.util.Log
 import com.google.gson.Gson
@@ -12,6 +14,8 @@ import org.json.JSONObject
 import java.io.IOException
 
 class LoginDataImplementation {
+    lateinit var activity:Activity
+
     fun login( username:String, password:String, onLogIn: OnLogIn){
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
@@ -39,17 +43,17 @@ class LoginDataImplementation {
 
                 }else{
                     val gson = Gson()
-                    val responseBody = response.body!!.toString()
                     val tokens: Map<String, String> = gson.fromJson(
-                        responseBody,
+                        response.body!!.string(),
                         object : TypeToken<Map<String, String>>() {}.type
                     )
-                    for(token in tokens){
-                        Log.e("token", token.value)
+                    val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)?: return
+                    with (sharedPref.edit()) {
+                        putString("token", tokens["token"])
+                        apply()
                     }
-
                     onLogIn.onSuccess()
-                    Log.i("Response", response.body!!.string())
+                    //Log.i("Response", response.body!!.string())
                 }
 
             }
@@ -58,5 +62,11 @@ class LoginDataImplementation {
             error.printStackTrace()
 
         }
+    }
+
+    fun getActivityContext(activity: Activity){
+        this.activity = activity
+
+
     }
 }

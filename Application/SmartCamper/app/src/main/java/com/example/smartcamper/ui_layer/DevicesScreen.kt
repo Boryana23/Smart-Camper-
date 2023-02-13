@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun DevicesScreen(){
+    NavBar()
+
     Text(
         text = "Your devices... ",
         fontSize = 40.sp,

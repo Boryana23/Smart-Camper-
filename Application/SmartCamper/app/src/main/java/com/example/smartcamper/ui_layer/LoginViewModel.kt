@@ -1,5 +1,6 @@
 package com.example.smartcamper.ui_layer
 
+import android.app.Activity
 import android.text.TextUtils
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,11 +54,12 @@ class LoginViewModel(val loginData:LoginDataImplementation): ViewModel() {
         return ""
     }
 
-    fun login(){ //starts a couroutine for the business logic
+    fun login(activity: Activity){ //starts a couroutine for the business logic
         viewModelScope.launch{
             _stateFlow.emit(LoginState.Loading)
 
         }
+        loginData.getActivityContext(activity)
             loginData.login(username = email, password = password, onLogIn = object:OnLogIn{
                 override fun onError(error: String) {
                     viewModelScope.launch {
