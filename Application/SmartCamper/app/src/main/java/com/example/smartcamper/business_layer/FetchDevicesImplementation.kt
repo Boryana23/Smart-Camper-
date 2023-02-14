@@ -12,8 +12,9 @@ import okhttp3.Request
 class FetchDevicesImplementation {
 
     lateinit var activity: Activity
-
     fun getAvailableDevices() {
+        val names: MutableList<String> = mutableListOf()
+        val ids: MutableList<String> = mutableListOf()
         var token:String? = ""
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
@@ -28,15 +29,23 @@ class FetchDevicesImplementation {
         try {
             val request: Request = Request.Builder()
                 .url(url)
-                .addHeader("X-Authorization", "Bearer" + token )
+                .addHeader("X-Authorization", "Bearer " + token )
                 .build()
             client.newCall(request).execute().use { response ->
                 if (!response.isSuccessful) {
                     Log.e("Response error", response.toString())
                 } else {
 
-                    Log.e("Response", response.body!!.string())
+                    val gson = Gson()
+                    val dataEntries: Map<String, String> = gson.fromJson(
+                        response.body!!.string(),
+                        object : TypeToken<Map<String, String>>() {}.type
+                    )
+                    Log.e("data entries", dataEntries.toString())
                 }
+
+
+
 
             }
         } catch (error: Error) {
