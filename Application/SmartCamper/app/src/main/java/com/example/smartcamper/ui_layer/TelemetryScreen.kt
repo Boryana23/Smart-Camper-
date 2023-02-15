@@ -1,17 +1,13 @@
 package com.example.smartcamper.ui_layer
 
 import android.app.Activity
-import android.graphics.drawable.Icon
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
-
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CarRental
-import androidx.compose.material.icons.filled.Dangerous
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,21 +19,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.example.smartcamper.Screen
 
 @Composable
-fun DevicesScreen(viewModel: DevicesViewModel, navController: NavController) {
+fun TelemetryScreen(viewModel:TelemetryViewModel, id:String){
     Column {
         val activity = LocalContext.current as Activity
-        viewModel.getActivityContext(activity)
+        viewModel.fetchTelemetry(activity, id)
         NavBar()
-        viewModel.fetchDevices()
 
 
         Text(
 
-            text = "Your devices... ",
+            text = "Vehicle telemetry.. ",
             fontSize = 40.sp,
             fontStyle = FontStyle.Italic,
             textAlign = TextAlign.Center,
@@ -47,19 +40,22 @@ fun DevicesScreen(viewModel: DevicesViewModel, navController: NavController) {
         )
 
         LazyColumn {
-            item { DevicesGrid(viewModel, navController)}
+            item { TelemetryGrid(viewModel) }
         }
     }
 
 }
-@Composable
-fun RowScope.DeviceCell(
-    text: String,
-    weight: Float,
-    type: String,
-    icon: ImageVector?
 
-    ) {
+@Composable
+fun RowScope.TelemetryCell(
+    icon: ImageVector?,
+    text: String,
+
+    weight: Float,
+    type: String
+
+
+) {
     if (type == "icon") {
         if (icon != null) {
             Icon(imageVector = icon, contentDescription = "Camper icon")
@@ -77,13 +73,27 @@ fun RowScope.DeviceCell(
                 .weight(weight)
         )
     }
+
+    if(type == "value"){
+        Text(
+            text = text,
+            fontSize = 30.sp,
+            textAlign = TextAlign.Center,
+            color = Color.Red,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(bottom = 15.dp)
+                .weight(weight)
+        )
+    }
 }
 
-
 @Composable
-fun DevicesGrid(viewModel:DevicesViewModel, navController: NavController) {
-    val nameColumnWeight = .7f
-    val iconColumnWeight = .3f
+fun TelemetryGrid(viewModel:TelemetryViewModel) {
+    val nameColumnWeight = .4f
+    val iconColumnWeight = .2f
+    val valueColumnWeight = .4f
+
 
     Column(
         modifier = Modifier
@@ -91,27 +101,36 @@ fun DevicesGrid(viewModel:DevicesViewModel, navController: NavController) {
             .padding(16.dp)
     ) {
 
-        viewModel.devicesNames.forEachIndexed {index, name ->
+        viewModel.TelemetryNames.forEach {name ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 10.dp)
-                    .clickable { navController.navigate(Screen.Telemetry.route + "/${viewModel.devicesIds[index]}") },
+                    .padding(bottom = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
 
                 ) {
-                DeviceCell(
-                    text = name,
-                    weight = nameColumnWeight,
-                    "text",
-                    null
-                )
-                DeviceCell(
+
+                TelemetryCell(
                     text = "icon",
                     weight = iconColumnWeight,
-                    "icon",
-                    Icons.Filled.CarRental
+                    type = "icon",
+                    icon = Icons.Filled.CarRental
                 )
+
+                TelemetryCell(
+                    text = "icon",
+                    weight = nameColumnWeight,
+                    type = "text",
+                    icon = null
+                )
+
+                TelemetryCell(
+                    text = "icon",
+                    weight = valueColumnWeight,
+                    type = "value",
+                    icon = null
+                )
+
 
             }
             Divider(

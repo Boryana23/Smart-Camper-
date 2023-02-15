@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.smartcamper.business_layer.FetchDevicesImplementation
+import com.example.smartcamper.business_layer.FetchTelemetryImplementation
 import com.example.smartcamper.business_layer.LoginDataImplementation
 import com.example.smartcamper.ui_layer.*
 
@@ -23,15 +24,16 @@ fun NavGraph(navHost: NavHostController) {
         }
 
         composable(route = Screen.Devices.route){
-            DevicesScreen(viewModel = DevicesViewModel(fetchDevices = FetchDevicesImplementation()))
+            DevicesScreen(viewModel = DevicesViewModel(fetchDevices = FetchDevicesImplementation()), navController = navHost)
         }
 
         composable(
             route = Screen.Telemetry.route + "/{deviceId}"
         ) {navBackStack ->
             val id = navBackStack.arguments?.getString("deviceId")
-
-
+            if (id != null) {
+                TelemetryScreen(viewModel = TelemetryViewModel(fetchTelemetry = FetchTelemetryImplementation()), id = id)
+            }
         }
     }
 }
