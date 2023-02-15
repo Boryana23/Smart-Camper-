@@ -12,7 +12,8 @@ import okhttp3.Request
 class FetchDevicesImplementation {
 
     lateinit var activity: Activity
-    fun getAvailableDevices() {
+    fun getAvailableDevices():List<Devices> {
+
         val names: MutableList<String> = mutableListOf()
         val ids: MutableList<String> = mutableListOf()
         var token:String? = ""
@@ -37,20 +38,23 @@ class FetchDevicesImplementation {
                 } else {
 
                     val gson = Gson()
-                    val dataEntries: Map<String, String> = gson.fromJson(
-                        response.body!!.string(),
-                        object : TypeToken<Map<String, String>>() {}.type
-                    )
-                    Log.e("data entries", dataEntries.toString())
+                    val resp =  response.body!!.string()
+
+                    val trimmedResp = "[" + resp.substringAfter("[").substringBeforeLast("]") + "]"
+
+                    Log.e("RESP", trimmedResp)
+                    val entryData = gson.fromJson(trimmedResp, Array<Devices>::class.java).asList()
+                    Log.e("data entries", entryData.toString())
+                    return entryData
                 }
-
-
 
 
             }
         } catch (error: Error) {
             error.printStackTrace()
         }
+
+        return listOf()
     }
 
     fun getActivityContext(activity: Activity){

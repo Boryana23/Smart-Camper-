@@ -25,5 +25,13 @@ fun NavGraph(navHost: NavHostController) {
         composable(route = Screen.Devices.route){
             DevicesScreen(viewModel = DevicesViewModel(fetchDevices = FetchDevicesImplementation()))
         }
+
+        composable(
+            route = Screen.Telemetry.route + "/{deviceId}"
+        ) {navBackStack ->
+            val id = navBackStack.arguments?.getString("deviceId")
+
+
+        }
     }
 }
