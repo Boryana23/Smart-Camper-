@@ -10,8 +10,7 @@ import androidx.compose.material.Icon
 
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CarRental
-import androidx.compose.material.icons.filled.Dangerous
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +27,7 @@ import com.example.smartcamper.Screen
 
 @Composable
 fun DevicesScreen(viewModel: DevicesViewModel, navController: NavController) {
-    Column {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         val activity = LocalContext.current as Activity
         viewModel.getActivityContext(activity)
         NavBar()
@@ -42,7 +41,7 @@ fun DevicesScreen(viewModel: DevicesViewModel, navController: NavController) {
             fontStyle = FontStyle.Italic,
             textAlign = TextAlign.Center,
             color = Color.Blue,
-            modifier = Modifier.padding(top = 50.dp, start = 20.dp, end = 20.dp)
+            modifier = Modifier.padding(top = 50.dp, start = 20.dp, end = 20.dp, bottom = 50.dp)
 
         )
 
@@ -62,19 +61,20 @@ fun RowScope.DeviceCell(
     ) {
     if (type == "icon") {
         if (icon != null) {
-            Icon(imageVector = icon, contentDescription = "Camper icon")
+            Icon(imageVector = icon, modifier = Modifier.padding(end = 20.dp).size(50.dp), contentDescription = "Camper icon")
         }
     }
     if (type == "text") {
         Text(
             text = text,
             fontSize = 20.sp,
-            textAlign = TextAlign.Center,
+            textAlign = TextAlign.Left,
             color = Color.Blue,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .padding(bottom = 15.dp)
+                .padding(start = 20.dp)
                 .weight(weight)
+
         )
     }
 }
@@ -110,7 +110,7 @@ fun DevicesGrid(viewModel:DevicesViewModel, navController: NavController) {
                     text = "icon",
                     weight = iconColumnWeight,
                     "icon",
-                    Icons.Filled.CarRental
+                    Icons.Filled.Train
                 )
 
             }

@@ -2,6 +2,7 @@ package com.example.smartcamper.ui_layer
 
 import android.app.Activity
 import android.content.Context
+import android.view.View
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -45,6 +46,15 @@ fun LogInScreen(navController: NavController, viewModel: LoginViewModel){
             text = "Hello, camper owner... ",
             fontSize = 40.sp,
             fontStyle = FontStyle.Italic,
+            textAlign = TextAlign.Center,
+            color = Color.Blue,
+            modifier = Modifier.padding(top = 50.dp, start = 20.dp, end = 20.dp)
+
+        )
+
+        Text(
+            text = "Login in your account: ",
+            fontSize = 30.sp,
             textAlign = TextAlign.Center,
             color = Color.Blue,
             modifier = Modifier.padding(top = 50.dp, start = 20.dp, end = 20.dp)
@@ -123,11 +133,13 @@ fun observeViewModel (
             viewModel.stateFlow.onEach {
                 when(it){
                     is LoginState.Success -> {
-                        Toast.makeText(
+
+                        val toast = Toast.makeText(
                         context,
                         "Success",
-                        Toast.LENGTH_LONG
+                        Toast.LENGTH_SHORT
                     ).show()
+                        //toast.getView().getWindowVisibility() == View.VISIBLE
                         navController.navigate(Screen.Devices.route)
                     }
                     is LoginState.Error -> {
@@ -138,6 +150,7 @@ fun observeViewModel (
                         ).show()
 
                     }else -> {}
+
                 }
             }.launchIn(this)
         }

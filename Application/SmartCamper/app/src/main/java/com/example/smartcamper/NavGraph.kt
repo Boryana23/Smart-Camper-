@@ -13,7 +13,7 @@ import com.example.smartcamper.ui_layer.*
 fun NavGraph(navHost: NavHostController) {
     NavHost(
         navController = navHost,
-        startDestination = Screen.Welcome.route
+        startDestination = Screen.Devices.route
     ){
         composable( route = Screen.Welcome.route){
             WelcomeScreen(navController = navHost)

@@ -35,7 +35,7 @@ fun TelemetryScreen(viewModel:TelemetryViewModel, id:String){
             fontStyle = FontStyle.Italic,
             textAlign = TextAlign.Center,
             color = Color.Blue,
-            modifier = Modifier.padding(top = 50.dp, start = 20.dp, end = 20.dp)
+            modifier = Modifier.padding(top = 50.dp, start = 20.dp, end = 20.dp, bottom = 50.dp)
 
         )
 
@@ -50,7 +50,6 @@ fun TelemetryScreen(viewModel:TelemetryViewModel, id:String){
 fun RowScope.TelemetryCell(
     icon: ImageVector?,
     text: String,
-
     weight: Float,
     type: String
 
@@ -58,13 +57,13 @@ fun RowScope.TelemetryCell(
 ) {
     if (type == "icon") {
         if (icon != null) {
-            Icon(imageVector = icon, contentDescription = "Camper icon")
+            Icon(imageVector = icon, contentDescription = "Camper icon", modifier = Modifier.padding(start = 20.dp).size (50.dp))
         }
     }
     if (type == "text") {
         Text(
             text = text,
-            fontSize = 20.sp,
+            fontSize = 25.sp,
             textAlign = TextAlign.Center,
             color = Color.Blue,
             fontWeight = FontWeight.Bold,
@@ -77,9 +76,9 @@ fun RowScope.TelemetryCell(
     if(type == "value"){
         Text(
             text = text,
-            fontSize = 30.sp,
+            fontSize = 25.sp,
             textAlign = TextAlign.Center,
-            color = Color.Red,
+            color = Color(0XFF03dac5),
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(bottom = 15.dp)
@@ -143,7 +142,7 @@ fun TelemetryGrid(viewModel:TelemetryViewModel) {
                 color = Color.Gray,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .padding(bottom = 10.dp)
+                    .padding(start = 20.dp, bottom = 10.dp)
             )
 
             Divider(
