@@ -10,6 +10,6 @@ class TelemetryViewModel(val fetchTelemetry: FetchTelemetryImplementation):ViewM
         fetchTelemetry.getActivityContext(activity)
         fetchTelemetry.getDeviceId(id)
         fetchTelemetry.fetchTelemetryNames()
-
+        fetchTelemetry.fetchTelemetryValues()
     }
 }
