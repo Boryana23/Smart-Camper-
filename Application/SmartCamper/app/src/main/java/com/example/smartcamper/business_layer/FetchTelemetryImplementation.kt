@@ -49,7 +49,8 @@ class FetchTelemetryImplementation {
 
     }
 
-    fun fetchTelemetryValues(){
+    fun fetchTelemetryValues() : Map<String, TelemetryValues>{
+        fetchTelemetryNames()
         var token:String? = ""
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
@@ -77,13 +78,14 @@ class FetchTelemetryImplementation {
                     val resp =  response.body!!.string()
 
                     val dataEntry:Map<String, List<TelemetryValues>> = gson.fromJson(resp, object : TypeToken<Map<String, List<TelemetryValues>>>() {}.type)
+                    return dumpTelemetryValues(dataEntry)
                     Log.e("telemetry data entries", dataEntry.toString())
                 }
             }
         } catch (error: Error) {
             error.printStackTrace()
         }
-
+    return mutableMapOf()
     }
 
     fun dumpTelemetryNames():String {
@@ -93,6 +95,17 @@ class FetchTelemetryImplementation {
             result+=","
         }
         return result
+    }
+
+    fun dumpTelemetryValues(dataEntry:Map<String, List<TelemetryValues>>): Map<String, TelemetryValues>{
+        var dumpedValues: MutableMap<String, TelemetryValues> = mutableMapOf()
+
+        for(data in dataEntry){
+            dumpedValues[data.key] = data.value[0]
+
+        }
+        return dumpedValues
+
     }
 
     fun getDeviceId(id:String){

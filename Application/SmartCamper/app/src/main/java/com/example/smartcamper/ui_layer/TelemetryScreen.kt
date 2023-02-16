@@ -101,7 +101,7 @@ fun TelemetryGrid(viewModel:TelemetryViewModel) {
             .padding(16.dp)
     ) {
 
-        viewModel.TelemetryNames.forEach {name ->
+        viewModel.telemetryNames.forEach { name ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -118,21 +118,34 @@ fun TelemetryGrid(viewModel:TelemetryViewModel) {
                 )
 
                 TelemetryCell(
-                    text = "icon",
+                    text = name,
                     weight = nameColumnWeight,
                     type = "text",
                     icon = null
                 )
 
-                TelemetryCell(
-                    text = "icon",
-                    weight = valueColumnWeight,
-                    type = "value",
-                    icon = null
-                )
+                viewModel.telemetryValues[name]?.let {
+                    TelemetryCell(
+                        text = it.value,
+                        weight = valueColumnWeight,
+                        type = "value",
+                        icon = null
+                    )
+                }
 
 
             }
+
+            Text(
+                text = "Last fetched: ${viewModel.telemetryValues[name]?.ts}",
+                fontSize = 10.sp,
+                textAlign = TextAlign.Left,
+                color = Color.Gray,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(bottom = 10.dp)
+            )
+
             Divider(
                 color = Color.Blue,
                 thickness = 2.dp,
