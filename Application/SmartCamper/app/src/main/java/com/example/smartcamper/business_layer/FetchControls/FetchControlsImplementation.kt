@@ -58,7 +58,7 @@ class FetchControlsImplementation : FetchControlsState{
                     val trimmedResponse = "{"+ resultFromResponse.substring(startIndex = 1)
 
                     val gson = Gson()
-                    val dataEntry : Map <String, Boolean> = gson.fromJson(
+                    val dataEntry : Map <String, Int> = gson.fromJson(
                         trimmedResponse,
                         object : TypeToken<Map<String, Boolean>>() {}.type
                     )

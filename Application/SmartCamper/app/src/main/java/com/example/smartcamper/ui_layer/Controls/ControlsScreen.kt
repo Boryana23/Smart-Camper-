@@ -29,7 +29,7 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
         val activity = LocalContext.current as Activity
         viewModel.getActivityContext(activity)
         NavBar()
-        viewModel.getLastValues()
+        //viewModel.getLastValues()
 
         Text(
 
