@@ -1,18 +1,17 @@
-package com.example.smartcamper.business_layer
+package com.example.smartcamper.business_layer.FetchDevices
 
 import android.app.Activity
 import android.content.Context
 import android.os.StrictMode
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-class FetchDevicesImplementation {
+class FetchDevicesImplementation:FetchDevices {
 
     lateinit var activity: Activity
-    fun getAvailableDevices():List<Devices> {
+    override fun getAvailableDevices():List<Devices> {
 
         var token:String? = ""
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
@@ -55,7 +54,7 @@ class FetchDevicesImplementation {
         return listOf()
     }
 
-    fun getActivityContext(activity: Activity){
+    override fun getActivityContext(activity: Activity){
         this.activity = activity
 
 

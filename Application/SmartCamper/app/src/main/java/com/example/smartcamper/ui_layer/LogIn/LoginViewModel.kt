@@ -1,4 +1,4 @@
-package com.example.smartcamper.ui_layer
+package com.example.smartcamper.ui_layer.LogIn
 
 import android.app.Activity
 import android.text.TextUtils
@@ -7,16 +7,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.smartcamper.business_layer.LoginDataImplementation
-import com.example.smartcamper.business_layer.OnLogIn
+import com.example.smartcamper.business_layer.LoginData.LoginDataImplementation
+import com.example.smartcamper.business_layer.LoginData.OnLogIn
 import com.example.smartcamper.ui_layer.states.LoginState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
-class LoginViewModel(val loginData:LoginDataImplementation): ViewModel() {
+class LoginViewModel(val loginData: LoginDataImplementation): ViewModel() {
     var isEmailInvalid: Boolean by mutableStateOf(true)
     var email : String  by mutableStateOf("")
     var password : String by mutableStateOf("")
@@ -60,7 +59,7 @@ class LoginViewModel(val loginData:LoginDataImplementation): ViewModel() {
 
         }
         loginData.getActivityContext(activity)
-            loginData.login(username = email, password = password, onLogIn = object:OnLogIn{
+            loginData.login(username = email, password = password, onLogIn = object: OnLogIn {
                 override fun onError(error: String) {
                     viewModelScope.launch {
                         _stateFlow.emit(LoginState.Error(error))

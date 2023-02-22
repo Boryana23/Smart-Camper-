@@ -1,4 +1,4 @@
-package com.example.smartcamper.business_layer
+package com.example.smartcamper.business_layer.LoginData
 
 interface OnLogIn {
     fun onSuccess()

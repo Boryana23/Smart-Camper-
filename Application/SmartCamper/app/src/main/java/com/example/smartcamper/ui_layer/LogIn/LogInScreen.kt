@@ -2,7 +2,6 @@ package com.example.smartcamper.ui_layer
 
 import android.app.Activity
 import android.content.Context
-import android.view.View
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,6 +28,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.example.smartcamper.Screen
+import com.example.smartcamper.ui_layer.LogIn.LoginViewModel
 import com.example.smartcamper.ui_layer.states.LoginState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn

@@ -1,13 +1,12 @@
-package com.example.smartcamper.ui_layer
+package com.example.smartcamper.ui_layer.Devices
 
 import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.smartcamper.business_layer.Devices
-import com.example.smartcamper.business_layer.FetchDevicesImplementation
-import okhttp3.internal.wait
+import com.example.smartcamper.business_layer.FetchDevices.Devices
+import com.example.smartcamper.business_layer.FetchDevices.FetchDevicesImplementation
 
-class DevicesViewModel(val fetchDevices:FetchDevicesImplementation):ViewModel() {
+class DevicesViewModel(val fetchDevices: FetchDevicesImplementation):ViewModel() {
     var devices:List<Devices> = mutableListOf()
     var devicesNames:MutableList<String> = mutableListOf()
     var devicesIds: MutableList<String?> = mutableListOf()

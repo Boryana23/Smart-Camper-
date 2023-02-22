@@ -1,7 +1,6 @@
 package com.example.smartcamper.ui_layer
 
 import android.app.Activity
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.smartcamper.Screen
+import com.example.smartcamper.ui_layer.Devices.DevicesViewModel
 
 @Composable
 fun DevicesScreen(viewModel: DevicesViewModel, navController: NavController) {
@@ -81,7 +81,7 @@ fun RowScope.DeviceCell(
 
 
 @Composable
-fun DevicesGrid(viewModel:DevicesViewModel, navController: NavController) {
+fun DevicesGrid(viewModel: DevicesViewModel, navController: NavController) {
     val nameColumnWeight = .7f
     val iconColumnWeight = .3f
 

@@ -4,16 +4,19 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.smartcamper.business_layer.FetchDevicesImplementation
-import com.example.smartcamper.business_layer.FetchTelemetryImplementation
-import com.example.smartcamper.business_layer.LoginDataImplementation
+import com.example.smartcamper.business_layer.FetchDevices.FetchDevicesImplementation
+import com.example.smartcamper.business_layer.FetchTelemetry.FetchTelemetryImplementation
+import com.example.smartcamper.business_layer.LoginData.LoginDataImplementation
 import com.example.smartcamper.ui_layer.*
+import com.example.smartcamper.ui_layer.Devices.DevicesViewModel
+import com.example.smartcamper.ui_layer.LogIn.LoginViewModel
+import com.example.smartcamper.ui_layer.Telemetry.TelemetryViewModel
 
 @Composable
 fun NavGraph(navHost: NavHostController) {
     NavHost(
         navController = navHost,
-        startDestination = Screen.Devices.route
+        startDestination = Screen.Welcome.route
     ){
         composable( route = Screen.Welcome.route){
             WelcomeScreen(navController = navHost)

@@ -19,9 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.smartcamper.ui_layer.Telemetry.TelemetryViewModel
 
 @Composable
-fun TelemetryScreen(viewModel:TelemetryViewModel, id:String){
+fun TelemetryScreen(viewModel: TelemetryViewModel, id:String){
     Column {
         val activity = LocalContext.current as Activity
         viewModel.fetchTelemetry(activity, id)
@@ -88,7 +89,7 @@ fun RowScope.TelemetryCell(
 }
 
 @Composable
-fun TelemetryGrid(viewModel:TelemetryViewModel) {
+fun TelemetryGrid(viewModel: TelemetryViewModel) {
     val nameColumnWeight = .4f
     val iconColumnWeight = .2f
     val valueColumnWeight = .4f

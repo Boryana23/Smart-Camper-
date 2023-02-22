@@ -1,9 +1,8 @@
-package com.example.smartcamper.business_layer
+package com.example.smartcamper.business_layer.LoginData
 
 import android.app.Activity
 import android.content.Context
 import android.os.StrictMode
-import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType.Companion.toMediaType
@@ -11,12 +10,11 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import java.io.IOException
 
-class LoginDataImplementation {
+class LoginDataImplementation:LoginData {
     lateinit var activity:Activity
 
-    fun login( username:String, password:String, onLogIn: OnLogIn){
+    override fun login(username:String, password:String, onLogIn: OnLogIn){
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
         var client:OkHttpClient = OkHttpClient()
@@ -64,7 +62,7 @@ class LoginDataImplementation {
         }
     }
 
-    fun getActivityContext(activity: Activity){
+    override fun getActivityContext(activity: Activity){
         this.activity = activity
 
 

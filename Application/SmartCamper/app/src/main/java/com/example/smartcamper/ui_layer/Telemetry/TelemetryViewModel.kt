@@ -1,9 +1,9 @@
-package com.example.smartcamper.ui_layer
+package com.example.smartcamper.ui_layer.Telemetry
 
 import android.app.Activity
 import androidx.lifecycle.ViewModel
-import com.example.smartcamper.business_layer.FetchTelemetryImplementation
-import com.example.smartcamper.business_layer.TelemetryValues
+import com.example.smartcamper.business_layer.FetchTelemetry.FetchTelemetryImplementation
+import com.example.smartcamper.business_layer.FetchTelemetry.TelemetryValues
 
 class TelemetryViewModel(val fetchTelemetry: FetchTelemetryImplementation):ViewModel() {
     var telemetryNames:Set<String> = mutableSetOf()

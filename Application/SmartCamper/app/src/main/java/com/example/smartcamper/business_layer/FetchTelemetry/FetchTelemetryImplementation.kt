@@ -1,4 +1,4 @@
-package com.example.smartcamper.business_layer
+package com.example.smartcamper.business_layer.FetchTelemetry
 
 import android.app.Activity
 import android.content.Context
@@ -9,12 +9,12 @@ import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-class FetchTelemetryImplementation {
+class FetchTelemetryImplementation: FetchTelemetry {
     lateinit var activity: Activity
     var deviceId = ""
     var telemetryNames:MutableList<String> = mutableListOf()
 
-    fun fetchTelemetryNames(){
+    override fun fetchTelemetryNames(){
         var token:String? = ""
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
@@ -49,7 +49,7 @@ class FetchTelemetryImplementation {
 
     }
 
-    fun fetchTelemetryValues() : Map<String, TelemetryValues>{
+    override fun fetchTelemetryValues() : Map<String, TelemetryValues>{
         fetchTelemetryNames()
         var token:String? = ""
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
@@ -88,7 +88,7 @@ class FetchTelemetryImplementation {
     return mutableMapOf()
     }
 
-    fun dumpTelemetryNames():String {
+    override fun dumpTelemetryNames():String {
         var result = ""
         for(entry in telemetryNames){
             result += entry
@@ -97,7 +97,7 @@ class FetchTelemetryImplementation {
         return result
     }
 
-    fun dumpTelemetryValues(dataEntry:Map<String, List<TelemetryValues>>): Map<String, TelemetryValues>{
+    override fun dumpTelemetryValues(dataEntry:Map<String, List<TelemetryValues>>): Map<String, TelemetryValues>{
         var dumpedValues: MutableMap<String, TelemetryValues> = mutableMapOf()
 
         for(data in dataEntry){
@@ -108,12 +108,12 @@ class FetchTelemetryImplementation {
 
     }
 
-    fun getDeviceId(id:String){
+    override fun getDeviceId(id:String){
         this.deviceId = id
 
     }
 
-    fun getActivityContext(activity: Activity){
+    override fun getActivityContext(activity: Activity){
         this.activity = activity
     }
 }
