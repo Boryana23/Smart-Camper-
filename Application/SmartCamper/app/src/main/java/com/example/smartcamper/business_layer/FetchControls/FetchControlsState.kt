@@ -1,0 +1,9 @@
+package com.example.smartcamper.business_layer.FetchControls
+
+import android.app.Activity
+
+interface FetchControlsState {
+    fun getActivityContext(activity: Activity)
+    fun getControlState()
+    fun setControlState(enabled: Boolean, pin: Int) : Boolean
+}

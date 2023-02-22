@@ -56,7 +56,5 @@ class FetchDevicesImplementation:FetchDevices {
 
     override fun getActivityContext(activity: Activity){
         this.activity = activity
-
-
     }
 }

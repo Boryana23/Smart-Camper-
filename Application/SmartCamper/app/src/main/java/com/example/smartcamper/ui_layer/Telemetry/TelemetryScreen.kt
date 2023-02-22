@@ -3,9 +3,7 @@ package com.example.smartcamper.ui_layer
 import android.app.Activity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CarRental
 import androidx.compose.runtime.Composable
@@ -19,10 +17,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.smartcamper.Screen
 import com.example.smartcamper.ui_layer.Telemetry.TelemetryViewModel
 
 @Composable
-fun TelemetryScreen(viewModel: TelemetryViewModel, id:String){
+fun TelemetryScreen(navController:NavController, viewModel: TelemetryViewModel, id:String){
     Column {
         val activity = LocalContext.current as Activity
         viewModel.fetchTelemetry(activity, id)
@@ -39,6 +39,19 @@ fun TelemetryScreen(viewModel: TelemetryViewModel, id:String){
             modifier = Modifier.padding(top = 50.dp, start = 20.dp, end = 20.dp, bottom = 50.dp)
 
         )
+        OutlinedButton(
+            onClick = { navController.navigate(Screen.Controls.route) }, modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp),
+            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Blue)
+        ) {
+            Text(
+                text = "Enter controls",
+                textAlign = TextAlign.Center,
+                color = Color.White,
+                fontSize = 20.sp
+            )
+        }
 
         LazyColumn {
             item { TelemetryGrid(viewModel) }

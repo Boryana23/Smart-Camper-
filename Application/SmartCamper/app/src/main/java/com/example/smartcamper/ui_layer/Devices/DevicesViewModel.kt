@@ -4,9 +4,10 @@ import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.smartcamper.business_layer.FetchDevices.Devices
+import com.example.smartcamper.business_layer.FetchDevices.FetchDevices
 import com.example.smartcamper.business_layer.FetchDevices.FetchDevicesImplementation
 
-class DevicesViewModel(val fetchDevices: FetchDevicesImplementation):ViewModel() {
+class DevicesViewModel(val fetchDevices: FetchDevices):ViewModel() {
     var devices:List<Devices> = mutableListOf()
     var devicesNames:MutableList<String> = mutableListOf()
     var devicesIds: MutableList<String?> = mutableListOf()

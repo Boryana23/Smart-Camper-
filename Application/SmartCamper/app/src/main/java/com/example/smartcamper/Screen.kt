@@ -5,5 +5,5 @@ sealed class Screen(val route :String){
     object LogIn: Screen(route = "login_path")
     object Devices: Screen(route = "device_path")
     object Telemetry: Screen(route = "telemetry_path")
-
+    object Controls: Screen(route = "controls_path")
 }
