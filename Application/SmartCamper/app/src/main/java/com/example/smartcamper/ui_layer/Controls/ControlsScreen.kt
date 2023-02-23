@@ -29,8 +29,6 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
         val activity = LocalContext.current as Activity
         viewModel.getActivityContext(activity)
         NavBar()
-        //viewModel.getLastValues()
-
         Text(
 
             text = "Control your appliances:  ",
@@ -72,10 +70,13 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
                             .size(50.dp),
                         contentDescription = "Camper icon"
                     )
+                    val checkedFanState = remember { mutableStateOf(false) }
                     Switch(
-                        checked = viewModel.fanState,
+                        checked = checkedFanState.value,
                         onCheckedChange = {
-                            viewModel.changePinState(pin = 1)
+                            checkedFanState.value = it
+                            viewModel.fanState = !checkedFanState.value
+                            viewModel.changePinState(pin = 0)
                         }
                     )
                 }
@@ -88,10 +89,13 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
                             .size(50.dp),
                         contentDescription = "Camper icon"
                     )
+                    val checkedCondState = remember { mutableStateOf(false) }
                     Switch(
-                        checked = viewModel.condState,
+                        checked = checkedCondState.value,
                         onCheckedChange = {
-                            viewModel.changePinState(pin = 2)
+                            checkedCondState.value = it
+                            viewModel.condState = !checkedCondState.value
+                            viewModel.changePinState(pin = 0)
                         }
                     )
                 }
@@ -104,10 +108,13 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
                             .size(50.dp),
                         contentDescription = "Camper icon"
                     )
+                    val checkedCoffeeState = remember { mutableStateOf(false) }
                     Switch(
-                        checked = viewModel.coffeeState,
+                        checked = checkedCoffeeState.value,
                         onCheckedChange = {
-                            viewModel.changePinState(pin = 3)
+                            checkedCoffeeState.value = it
+                            viewModel.coffeeState = !checkedCoffeeState.value
+                            viewModel.changePinState(pin = 0)
                         }
                     )
                 }

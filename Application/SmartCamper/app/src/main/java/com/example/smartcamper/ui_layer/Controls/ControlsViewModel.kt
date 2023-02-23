@@ -26,7 +26,4 @@ class ControlsViewModel(val fetchControlsState: FetchControlsState) : ViewModel(
         Log.e("light State ", lightState.toString())
     }
 
-    fun getLastValues(){
-        fetchControlsState.getControlState()
-    }
 }
