@@ -100,7 +100,7 @@ void loop() {
   send_passed += quant;
 
   if (WiFi.status() != WL_CONNECTED) {
-    reconnect();
+    void reconnect();
     return;
   }
 
@@ -129,7 +129,7 @@ void loop() {
     }
 
     Serial.println("Subscribe done");
-    bool subscribed = true;
+    subscribed = true;
   }
 
   if (send_passed > send_delay) {

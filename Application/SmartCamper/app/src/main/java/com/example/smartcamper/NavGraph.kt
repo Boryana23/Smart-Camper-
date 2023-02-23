@@ -19,7 +19,7 @@ import com.example.smartcamper.ui_layer.Telemetry.TelemetryViewModel
 fun NavGraph(navHost: NavHostController) {
     NavHost(
         navController = navHost,
-        startDestination = Screen.Devices.route
+        startDestination = Screen.Welcome.route
     ){
         composable( route = Screen.Welcome.route){
             WelcomeScreen(navController = navHost)
