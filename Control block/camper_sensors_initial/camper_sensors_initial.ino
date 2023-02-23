@@ -23,6 +23,9 @@ uint8_t leds_control[] = { 23, 19, 22, 21 };
 #define DHT_PIN 27
 DHTesp dht;
 
+unsigned long lastSend;
+#define ANALOG_PIN 26
+float volt;
 
 int quant = 20;
 int led_delay = 1000;
@@ -33,8 +36,6 @@ int send_passed = 0;
 
 bool subscribed = false;
 int current_led = 0;
-
-
 
 RPC_Response processGetGpioState(const RPC_Data &data){
   
@@ -87,6 +88,9 @@ void setup() {
     digitalWrite(leds_control[i], HIGH);
   }
 
+  pinMode(ANALOG_PIN, INPUT_PULLUP);
+  lastSend = 0;
+
 }
 
 void loop() {
@@ -96,11 +100,15 @@ void loop() {
   send_passed += quant;
 
   if (WiFi.status() != WL_CONNECTED) {
-    void reconnect();
+    reconnect();
     return;
   }
 
- 
+  if ( millis() - lastSend > 1000 ) { 
+    getVoltage();
+    lastSend = millis();
+  }
+
   if (!tb.connected()) {
     subscribed = false;
     Serial.print("Connecting to: ");
@@ -113,21 +121,17 @@ void loop() {
     }
   }
 
-}
-
   if (!subscribed) {
     Serial.println("Subscribing for RPC...");
-
       if (!tb.RPC_Subscribe(callbacks, COUNT_OF(callbacks))) {
       Serial.println("Failed to subscribe for RPC");
       return;
     }
 
     Serial.println("Subscribe done");
-    subscribed = true;
+    bool subscribed = true;
   }
 
-  
   if (send_passed > send_delay) {
     Serial.println("Sending data...");
 
@@ -142,7 +146,17 @@ void loop() {
     send_passed = 0;
   }
 
-  //tb.loop();
+  tb.loop();
+}
+
+void  getVoltage(){
+  volt = analogRead(ANALOG_PIN);
+  double voltage = map(volt,0,1023, 0, 2500);
+  voltage /=100;
+  Serial.print("Voltage: ");
+  Serial.print(voltage);
+  Serial.println("V");
+  tb.sendTelemetryFloat("Voltage", voltage);
 }
 
 void InitWiFi()
