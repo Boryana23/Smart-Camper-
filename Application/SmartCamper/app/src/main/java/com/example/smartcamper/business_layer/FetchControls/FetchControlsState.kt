@@ -5,4 +5,5 @@ import android.app.Activity
 interface FetchControlsState {
     fun getActivityContext(activity: Activity)
     fun setControlState(enabled: Boolean, pin: Int) : Boolean
+    fun getControlState() : Map<String, Int>
 }

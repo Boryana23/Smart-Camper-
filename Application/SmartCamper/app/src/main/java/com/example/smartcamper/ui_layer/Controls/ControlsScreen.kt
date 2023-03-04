@@ -29,6 +29,9 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
         val activity = LocalContext.current as Activity
         viewModel.getActivityContext(activity)
         NavBar()
+
+        viewModel.getControlsValues()
+
         Text(
 
             text = "Control your appliances:  ",
