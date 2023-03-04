@@ -9,28 +9,36 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.example.smartcamper.ui_layer.DevicesGrid
 import com.example.smartcamper.ui_layer.NavBar
+import kotlinx.coroutines.launch
 
 @Composable
 fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
+
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         val activity = LocalContext.current as Activity
-        viewModel.getActivityContext(activity)
+        LaunchedEffect(key1 = Unit,  block = {
+            viewModel.getActivityContext(activity)
+
+        })
         NavBar()
 
-        viewModel.getControlsValues()
 
         Text(
 
@@ -54,7 +62,7 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
                             .size(50.dp),
                         contentDescription = "Camper icon"
                     )
-                    val checkedLightState = remember { mutableStateOf(false) }
+                    val checkedLightState = remember { mutableStateOf(viewModel.lightState) }
                     Switch(
                         checked = checkedLightState.value,
                         onCheckedChange = {
@@ -73,7 +81,7 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
                             .size(50.dp),
                         contentDescription = "Camper icon"
                     )
-                    val checkedFanState = remember { mutableStateOf(false) }
+                    val checkedFanState = remember { mutableStateOf(viewModel.fanState) }
                     Switch(
                         checked = checkedFanState.value,
                         onCheckedChange = {
@@ -92,7 +100,7 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
                             .size(50.dp),
                         contentDescription = "Camper icon"
                     )
-                    val checkedCondState = remember { mutableStateOf(false) }
+                    val checkedCondState = remember { mutableStateOf(viewModel.condState) }
                     Switch(
                         checked = checkedCondState.value,
                         onCheckedChange = {
@@ -111,7 +119,7 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
                             .size(50.dp),
                         contentDescription = "Camper icon"
                     )
-                    val checkedCoffeeState = remember { mutableStateOf(false) }
+                    val checkedCoffeeState = remember { mutableStateOf(viewModel.coffeeState) }
                     Switch(
                         checked = checkedCoffeeState.value,
                         onCheckedChange = {
@@ -124,5 +132,14 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
             }
         }
     }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+
 }
+
+/*fun getNeededInfo(lifecycleOwner: LifecycleOwner){
+    lifecycleOwner.lifecycleScope.launch {
+        lifecycleOwner.repeatOnLifecycle
+    }
+}*/
 

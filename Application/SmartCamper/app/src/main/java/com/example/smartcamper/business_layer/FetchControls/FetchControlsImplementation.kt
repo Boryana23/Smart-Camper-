@@ -54,7 +54,10 @@ class FetchControlsImplementation : FetchControlsState{
                 else{
                     val gson = Gson()
                     val result = response.body!!.string()
-                    val dataSet : Map<String,Int> = gson.fromJson(result, object : TypeToken<Map<String, Int>>() {}.type)
+                    val json = "{\"0\":1,\"1\":0,\"2\":0,\"3\":0}"
+                    //val json = gson.toJson(result)
+                    Log.e("Result: ", json)
+                    val dataSet : Map<String,Int> = gson.fromJson(json, object : TypeToken<Map<String, Int>>() {}.type)
                     Log.e("Data set: ", dataSet.toString())
                     return dataSet
                 }
