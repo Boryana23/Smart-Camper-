@@ -8,18 +8,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.smartcamper.business_layer.FetchControls.Controls
 import com.example.smartcamper.business_layer.FetchControls.FetchControlsState
 import kotlinx.coroutines.launch
+import kotlin.properties.Delegates
 
 class ControlsViewModel(val fetchControlsState: FetchControlsState) : ViewModel(){
-    var lightState : Boolean by mutableStateOf(false)
+    var lightState by Delegates.notNull<Boolean>()
     var fanState : Boolean by mutableStateOf(false)
     var condState : Boolean by mutableStateOf(false)
     var coffeeState : Boolean by mutableStateOf(false)
-    val controlsList =  mutableListOf(lightState, fanState, condState, coffeeState)
+
     var areControlsFetched by mutableStateOf(0)
 
-    lateinit var previousState : Map<String, Int>
+    lateinit var previousState : Controls
 
     fun getPreviousState(){
         if(areControlsFetched == 0){
@@ -33,33 +35,33 @@ class ControlsViewModel(val fetchControlsState: FetchControlsState) : ViewModel(
 
     fun getActivityContext(activity: Activity) {
         fetchControlsState.getActivityContext(activity)
-        getPreviousState()
     }
 
     fun changePinState(pin:Int){
+        val controlsList =  mutableListOf(lightState, fanState, condState, coffeeState)
         controlsList[pin] = fetchControlsState.setControlState(enabled = !controlsList[pin], pin = pin)
         Log.e("pin State ", controlsList[pin].toString())
         Log.e("light State ", lightState.toString())
     }
 
-    fun getControlsValues(){
+    private fun getControlsValues(){
         previousState = fetchControlsState.getControlState()
-        for(i in previousState){
-            if (i.key.toInt() == 0){
-                lightState = convertIntToBoolean(i.value)
-            }
 
-            if (i.key.toInt() == 1){
-                fanState = convertIntToBoolean(i.value)
-            }
+        if(previousState.zero < 2){
+            lightState = convertIntToBoolean(previousState.zero)
+            Log.e("LIGHT ST", lightState.toString())
+        }
 
-            if (i.key.toInt() == 2){
-                condState = convertIntToBoolean(i.value)
-            }
+        if(previousState.one < 2){
+            fanState = convertIntToBoolean(previousState.one)
+        }
 
-            if (i.key.toInt() == 3){
-                coffeeState = convertIntToBoolean(i.value)
-            }
+        if(previousState.two < 2){
+            condState = convertIntToBoolean(previousState.two)
+        }
+
+        if(previousState.three < 2){
+            coffeeState = convertIntToBoolean(previousState.three)
         }
     }
     private fun convertIntToBoolean(num: Int): Boolean{

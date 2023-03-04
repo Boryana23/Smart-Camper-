@@ -33,10 +33,9 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         val activity = LocalContext.current as Activity
-        LaunchedEffect(key1 = Unit,  block = {
-            viewModel.getActivityContext(activity)
+        viewModel.getActivityContext(activity)
+        viewModel.getPreviousState()
 
-        })
         NavBar()
 
 
@@ -137,9 +136,5 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
 
 }
 
-/*fun getNeededInfo(lifecycleOwner: LifecycleOwner){
-    lifecycleOwner.lifecycleScope.launch {
-        lifecycleOwner.repeatOnLifecycle
-    }
-}*/
+
 

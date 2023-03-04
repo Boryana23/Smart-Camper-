@@ -4,8 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.os.StrictMode
 import android.util.Log
+import com.example.smartcamper.business_layer.FetchDevices.Devices
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -18,9 +21,10 @@ class FetchControlsImplementation : FetchControlsState{
 
     override fun getActivityContext(activity: Activity) {
         this.activity = activity
+        Log.e("ACTIVITY", this.activity.toString())
     }
 
-    override fun getControlState(): Map<String, Int> {
+    override fun getControlState(): Controls {
         var token:String? = ""
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
@@ -52,21 +56,23 @@ class FetchControlsImplementation : FetchControlsState{
                     Log.e("Relay Get error: ", response.body!!.string())
                 }
                 else{
-                    val gson = Gson()
                     val result = response.body!!.string()
-                    val json = "{\"0\":1,\"1\":0,\"2\":0,\"3\":0}"
-                    //val json = gson.toJson(result)
-                    Log.e("Result: ", json)
-                    val dataSet : Map<String,Int> = gson.fromJson(json, object : TypeToken<Map<String, Int>>() {}.type)
-                    Log.e("Data set: ", dataSet.toString())
-                    return dataSet
+                    var newResult = result.replace("\\\"", "\"")
+                    newResult = newResult.replace("\"1\"", "\"one\"")
+                    newResult = newResult.replace("\"2\"", "\"two\"")
+                    newResult = newResult.replace("\"3\"", "\"three\"")
+                    newResult = newResult.replace("\"0\"", "\"zero\"")
+
+                    Log.e("NEW JSON", newResult)
+                    val controlsJSON = Json.decodeFromString<Controls>(newResult.subSequence(1, newResult.length-1) as String)
+                    Log.e("Result ", controlsJSON.toString())
+                    return controlsJSON
                 }
             }
         }catch(error:Error){
             error.printStackTrace()
         }
-        //Log.e("Result", result.toString())
-        return mapOf()
+        return Controls(2,2,2,2)
     }
 
     override fun setControlState(enabled: Boolean, pin: Int): Boolean{
@@ -106,10 +112,10 @@ class FetchControlsImplementation : FetchControlsState{
                     Log.e("Relay error: ", response.body!!.string())
                 }
                 else{
-                    Log.e("Relay set: ", response.body!!.string())
-                    //val resultFromResponse = response.body!!.string().toBoolean()
-                    //Log.e("Result R", resultFromResponse.toString())
-                    //result = resultFromResponse
+                    //Log.e("Relay set: ", response.body!!.string())
+                    val resultFromResponse = response.body!!.string().toBoolean()
+                    Log.e("Result R", resultFromResponse.toString())
+                    result = resultFromResponse
                 }
             }
         }catch(error:Error){
@@ -117,6 +123,10 @@ class FetchControlsImplementation : FetchControlsState{
         }
         Log.e("Result", result.toString())
         return result
+    }
+
+    fun countOccurrences(s: String, ch: Char): Int {
+        return s.filter { it == ch }.count()
     }
 
 }
