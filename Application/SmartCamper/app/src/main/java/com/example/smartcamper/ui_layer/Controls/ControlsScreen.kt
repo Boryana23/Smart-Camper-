@@ -9,7 +9,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -21,12 +20,8 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import com.example.smartcamper.ui_layer.DevicesGrid
 import com.example.smartcamper.ui_layer.NavBar
-import kotlinx.coroutines.launch
 
 @Composable
 fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
@@ -35,10 +30,7 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
         val activity = LocalContext.current as Activity
         viewModel.getActivityContext(activity)
         viewModel.getPreviousState()
-
         NavBar()
-
-
         Text(
 
             text = "Control your appliances:  ",
@@ -131,10 +123,4 @@ fun ControlsScreen(viewModel: ControlsViewModel, navController: NavController) {
             }
         }
     }
-
-    val lifecycleOwner = LocalLifecycleOwner.current
-
 }
-
-
-

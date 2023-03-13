@@ -1,5 +1,4 @@
 package com.example.smartcamper.business_layer.FetchControls
-
 import android.app.Activity
 import android.content.Context
 import android.os.StrictMode
@@ -112,7 +111,6 @@ class FetchControlsImplementation : FetchControlsState{
                     Log.e("Relay error: ", response.body!!.string())
                 }
                 else{
-                    //Log.e("Relay set: ", response.body!!.string())
                     val resultFromResponse = response.body!!.string().toBoolean()
                     Log.e("Result R", resultFromResponse.toString())
                     result = resultFromResponse
@@ -124,9 +122,4 @@ class FetchControlsImplementation : FetchControlsState{
         Log.e("Result", result.toString())
         return result
     }
-
-    fun countOccurrences(s: String, ch: Char): Int {
-        return s.filter { it == ch }.count()
-    }
-
 }

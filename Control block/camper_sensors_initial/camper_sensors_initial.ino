@@ -19,12 +19,12 @@ ThingsBoard tb(espClient);
 
 int status = WL_IDLE_STATUS;
 int gpioState[] = {0, 0, 0, 0};
-uint8_t leds_control[] = { 23, 19, 22, 21 };
-#define DHT_PIN 27
+uint8_t leds_control[] = { 18, 5, 17, 16 };
+#define DHT_PIN 23
 DHTesp dht;
 
 unsigned long lastSend;
-#define ANALOG_PIN 26
+#define ANALOG_PIN 15
 float volt;
 
 int quant = 20;
@@ -180,4 +180,6 @@ void reconnect() {
     }
     Serial.println("Connected to Local network!");
   }
+  
 }
+  
